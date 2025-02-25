@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./layout/header";
 import Footer from "./layout/footer";
+import ZaloButton from "./shared/FloattingButton.tsx/ZaloButton";
+import FacebookButton from "./shared/FloattingButton.tsx/FacebookButton";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,6 +33,8 @@ export default function RootLayout({
       >
         <Header/>
         {children}
+        <FacebookButton/>
+        <ZaloButton />
         <Footer/>
       </body>
     </html>

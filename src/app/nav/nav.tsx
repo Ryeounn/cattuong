@@ -1,18 +1,11 @@
 "use client";
-
-import { faBolt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PiFlowerFill } from "react-icons/pi";
 import React, { useEffect, useState } from "react";
 import { apispreadsheets, imgFromDriveUrl } from "../shared/ApiSpreadSheet/ApiSpreadSheets";
 import Image from "next/image";
 import axios from "axios";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
 import "@/app/products/product.css";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const Nav = () => {
@@ -79,7 +72,13 @@ const Nav = () => {
 
     return (
         <div>
-            <div className="text-center text-[1.8rem] font-medium text-[#1e2934] sm:mt-14 lg:mb-10 sm:mb-4 font-mono">Danh Mục Sản Phẩm 2025</div>
+            {loading
+                ? [...Array(1)].map((_, index) => (
+                    <div key={index} className="w-[calc(100%-10%)] mx-20 h-[30px] rounded-lg my-5 bg-gray-300 animate-pulse"></div>
+                )) : (
+                    <div className="text-center text-[1.8rem] font-medium text-[#1e2934] sm:mt-14 lg:mb-10 sm:mb-4 font-mono">Danh Mục Sản Phẩm 2025</div>
+                )}
+
             <div className="flex justify-center gap-8 sm:hidden lg:flex">
                 {loading
                     ? [...Array(5)].map((_, index) => (
@@ -137,59 +136,58 @@ const Nav = () => {
             </div>
 
             {listProduct && (
-                <div className="lg:mt-20 lg:mx-20 sm:mt-10 sm:mx-5">
-                <div className="flex items-center justify-between">
-                    <div className="font-mono hover:underline cursor-pointer" onClick={handleViewAll}>
-                        Xem tất cả
-                    </div>
-                </div>
-        
-                {/* Nếu loading, hiển thị skeleton */}
-                {producLoading ? (
-                    <div className="mt-5 grid lg:grid-cols-5 sm:grid-cols-1 gap-5">
+                producLoading ? (
+                    <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-5">
                         {[...Array(5)].map((_, index) => (
-                            <div key={index} className="w-[250px] h-[350px] bg-gray-200 rounded-lg animate-pulse"></div>
+                            <div key={index} className="w-[calc(100%-15%)] h-[350px] mx-5 bg-gray-200 rounded-lg animate-pulse"></div>
                         ))}
                     </div>
-                ) : (
-                    <div className="mt-5">
-                        <div className="grid lg:grid-cols-5 sm:grid-cols-1 gap-5">
-                            {listProduct.slice(0, visibleCount).map((item: any) => (
-                                <div key={item.boutiqueid} className="card">
-                                    <div className="product-img">
-                                        <Image
-                                            width={200}
-                                            height={200}
-                                            alt="Hoa"
-                                            loading="lazy"
-                                            src={imgFromDriveUrl(item.images)}
-                                            className="w-[250px] h-[250px]"
-                                        />
-                                    </div>
-                                    <div className="absolute inset-0 flex items-center justify-center text-box">
-                                        <del className="text-lg text-gray-400">{item.original}đ</del>
-                                        <div className="ml-2 font-semibold text-[rgb(230,0,18)]">{item.discount}đ</div>
-                                    </div>
+                )
+                    : (
+                        <div className="lg:mt-20 lg:mx-20 sm:mt-10 sm:mx-5">
+                            <div className="flex items-center justify-between">
+                                <div className="font-mono hover:underline cursor-pointer" onClick={handleViewAll}>
+                                    Xem tất cả
                                 </div>
-                            ))}
+                            </div>
+                            <div className="mt-5">
+                                <div className="grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-5">
+                                    {listProduct.slice(0, visibleCount).map((item: any) => (
+                                        <div key={item.boutiqueid} className="card">
+                                            <div className="product-img">
+                                                <Image
+                                                    width={200}
+                                                    height={200}
+                                                    alt="Hoa"
+                                                    loading="lazy"
+                                                    src={imgFromDriveUrl(item.images)}
+                                                    className="w-[250px] h-[250px]"
+                                                />
+                                            </div>
+                                            <div className="absolute inset-0 flex items-center justify-center text-box">
+                                                <del className="text-lg text-gray-400">{item.original}đ</del>
+                                                <div className="ml-2 font-semibold text-[rgb(230,0,18)]">{item.discount}đ</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            {!producLoading && visibleCount < listProduct.length && (
+                                <div className="flex justify-center mt-5">
+                                    <button
+                                        onClick={handleLoadMore}
+                                        className="px-5 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition-all"
+                                    >
+                                        Xem thêm {listProduct.length - visibleCount} sản phẩm
+                                    </button>
+                                </div>
+                            )}
                         </div>
-                    </div>
-                )}
-        
-                {/* Nút Xem thêm */}
-                {!producLoading && visibleCount < listProduct.length && (
-                    <div className="flex justify-center mt-5">
-                        <button
-                            onClick={handleLoadMore}
-                            className="px-5 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition-all"
-                        >
-                            Xem thêm {listProduct.length - visibleCount} sản phẩm
-                        </button>
-                    </div>
-                )}
-            </div>
-            )}
+
+                    ))}
         </div>
+
+
     )
 }
 

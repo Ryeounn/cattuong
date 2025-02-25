@@ -84,3 +84,17 @@
         height: 400px;
     }
 }
+
+@media (min-width: 740px) {
+    .card{
+        width: 350px;
+        height: 400px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .card{
+        width: 260px;
+        height: 400px;
+    }
+}

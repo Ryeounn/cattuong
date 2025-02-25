@@ -7,7 +7,7 @@ const Benefit = () => {
     return (
         <div className="mt-[100px]">
             <p className="text-center text-[1.8rem] font-medium text-[#1e2934] sm:mt-14 sm:mb-10 lg:mb-16 font-mono">Quyền lợi khách hàng</p>
-            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-2 mx-10">
+            <div className="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 gap-2 mx-10">
                 <div className="border-[1px] border-solid sm:border-gray-400 lg:border-transparent hover:border-[#ccc] rounded-[10px] text-center m-[10px_5px] h-[150px] hover:shadow-md p-[10px] pt-5 cursor-pointer transition-all duration-300 ease-in-out">
                     <FontAwesomeIcon icon={faTruck} className="text-[20px] text-gray-600 mb-[10px] tracking-wide absolute z-20" />
                     <svg className="relative sm:top-[-20px] lg:top-[-15px] sm:left-[130px] lg:left-[138px] z-10" viewBox="0 0 200 200" width="65" height="65" xmlns="http://www.w3.org/2000/svg">
