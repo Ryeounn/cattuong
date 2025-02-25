@@ -206,8 +206,8 @@ const ProductPage = () => {
                             <div className={`${filteredProducts.length > 0 ? 'grid lg:grid-cols-3 sm:grid-cols-1 gap-8' : 'block'}`}>
                                 {filteredProducts.length > 0 ? (
                                     filteredProducts.slice(0, visibleCount).map((item: any) => (
-                                        <Link href={`/products/${decodeSlug}/${item.code}`}>
-                                            <div key={item.boutiqueid} className="w-full h-[450px] border-[1px] rounded-lg p-3 cursor-pointer overflow-hidden">
+                                        <Link key={item.boutiqueid} href={`/products/${decodeSlug}/${item.code}`}>
+                                            <div className="w-full h-[450px] border-[1px] rounded-lg p-3 cursor-pointer overflow-hidden">
                                                 <div className="w-full h-[350px] overflow-hidden">
                                                     <Image
                                                         loading='lazy'
