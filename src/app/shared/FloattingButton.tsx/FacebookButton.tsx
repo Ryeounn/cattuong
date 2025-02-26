@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const FacebookButton = () => {
   return (
-    <div className="fixed bottom-24 right-5 flex flex-col gap-3 z-50">
+    <div className="fixed bottom-24 right-5 flex flex-col gap-3 !z-[1000000]">
       {/* Nút Facebook */}
       <Link
         href="https://www.facebook.com/profile.php?id=100082167396228"

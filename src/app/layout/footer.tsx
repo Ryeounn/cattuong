@@ -4,6 +4,7 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { apispreadsheets } from "../shared/ApiSpreadSheet/ApiSpreadSheets";
+import Link from "next/link";
 
 const Footer = () => {
     const sheetName = "categories";
@@ -34,7 +35,7 @@ const Footer = () => {
                         <div className="space-y-3">
                             <div className="text-[1.3rem] font-semibold">Cửa hàng</div>
                             {category.map((item: any, index: number) => (
-                                <div key={index}>{item.content}</div>
+                                <Link href={`/products/${item.content.replace(/ /g, "-")}`} key={index} className="block">{item.content}</Link>
                             ))}
                         </div>
 
@@ -53,7 +54,10 @@ const Footer = () => {
                             Theo dõi chúng tôi
                         </div>
                         <ul className="wrapper">
-                            <li className="icon facebook">
+                            <Link href="https://www.facebook.com/profile.php?id=100082167396228"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                    <li className="icon facebook">
                                 <span className="tooltip">Facebook</span>
                                 <svg
                                     viewBox="0 0 320 512"
@@ -66,6 +70,8 @@ const Footer = () => {
                                     ></path>
                                 </svg>
                             </li>
+                            </Link>
+                            
                             <li className="icon youtube">
                                 <span className="tooltip">YouTube</span>
                                 <svg

@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "@/app/products/product.css";
 import "react-loading-skeleton/dist/skeleton.css";
+import Link from "next/link";
 
 const Nav = () => {
     const sheetName = "categories";
@@ -26,11 +27,11 @@ const Nav = () => {
                 const storedCategories = localStorage.getItem("categories");
 
                 if (storedCategories) {
-                    setCategories(JSON.parse(storedCategories)); // Dùng dữ liệu đã lưu
+                    setCategories(JSON.parse(storedCategories));
                 } else {
                     const res = await axios.get(`${apispreadsheets}/${sheetName}`);
                     setCategories(res.data);
-                    localStorage.setItem("categories", JSON.stringify(res.data)); // Lưu vào localStorage
+                    localStorage.setItem("categories", JSON.stringify(res.data));
                 }
             } catch (err) {
                 console.log("Lỗi tải dữ liệu:", err);
@@ -137,7 +138,7 @@ const Nav = () => {
 
             {listProduct && (
                 producLoading ? (
-                    <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-5">
+                    <div className="mt-32 grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-5 mx-10">
                         {[...Array(5)].map((_, index) => (
                             <div key={index} className="w-[calc(100%-15%)] h-[350px] mx-5 bg-gray-200 rounded-lg animate-pulse"></div>
                         ))}
@@ -152,24 +153,32 @@ const Nav = () => {
                             </div>
                             <div className="mt-5">
                                 <div className="grid md:grid-cols-2 lg:grid-cols-5 sm:grid-cols-1 gap-5">
-                                    {listProduct.slice(0, visibleCount).map((item: any) => (
-                                        <div key={item.boutiqueid} className="card">
-                                            <div className="product-img">
-                                                <Image
-                                                    width={200}
-                                                    height={200}
-                                                    alt="Hoa"
-                                                    loading="lazy"
-                                                    src={imgFromDriveUrl(item.images)}
-                                                    className="w-[250px] h-[250px]"
-                                                />
-                                            </div>
-                                            <div className="absolute inset-0 flex items-center justify-center text-box">
-                                                <del className="text-lg text-gray-400">{item.original}đ</del>
-                                                <div className="ml-2 font-semibold text-[rgb(230,0,18)]">{item.discount}đ</div>
-                                            </div>
-                                        </div>
-                                    ))}
+                                    {listProduct.slice(0, visibleCount).map((item: any) => {
+                                        const category = categories.find((c: any) => c.categoriesid == selectedCategory);
+                                        const links = decodeURIComponent(category.content);
+                                        const link = links.replace(/ /g, "-");
+                                        return (
+                                            <Link href={`/products/${link}/${item.code}`} key={item.boutiqueid}>
+                                                <div className="card">
+                                                    <div className="product-img">
+                                                        <Image
+                                                            width={200}
+                                                            height={200}
+                                                            alt="Hoa"
+                                                            loading="lazy"
+                                                            src={imgFromDriveUrl(item.images)}
+                                                            className="w-[250px] h-[250px]"
+                                                        />
+                                                    </div>
+                                                    <div className="absolute inset-0 flex items-center justify-center text-box">
+                                                        <del className="text-lg text-gray-400">{item.original}đ</del>
+                                                        <div className="ml-2 font-semibold text-[rgb(230,0,18)]">{item.discount}đ</div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        );
+                                    })}
+
                                 </div>
                             </div>
                             {!producLoading && visibleCount < listProduct.length && (

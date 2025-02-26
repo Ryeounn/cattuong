@@ -88,11 +88,16 @@ const Header = () => {
                 <div className="lg:block sm:hidden"></div>
                 <div className="lg:text-lg lg:block sm:hidden sm:text-sm leading-[40px] lg:text-center sm:text-left font-times text-white">
                     Giao hàng miễn phí khu vực Ninh Kiều!{" "}
-                    <span className="font-semibold underline">Đặt hàng ngay.</span>
+                    <Link href="https://zalo.me/0939206602"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <span className="font-semibold underline">Đặt hàng ngay.</span>
+                    </Link>
+
                 </div>
-                <div className="lg:hidden sm:block font-mono text-white">
+                <Link href={'/'} className="lg:hidden sm:block font-mono text-white">
                     Tiệm hoa Cát Tường
-                </div>
+                </Link>
                 <div className="pt-1 cursor-pointer" onClick={toggleSearch}>
                     <FontAwesomeIcon
                         icon={isSearchActive ? faXmark : faMagnifyingGlass}
@@ -122,7 +127,7 @@ const Header = () => {
                 <ul className="flex flex-col items-end gap-6 text-white mt-3 pr-5">
                     <li className="hover:text-blue-500 cursor-pointer">Trang chủ</li>
                     {category.map((item: any, index: number) => (
-                        <li key={index} className="hover:text-blue-500 cursor-pointer">{item.content}</li>
+                        <Link key={index} onClick={() => setIsMenuOpen(false)} href={`/products/${item.content.replace(/ /g, "-")}`} className="hover:text-blue-500">{item.content}</Link>
                     ))}
                 </ul>
             </div>
@@ -131,13 +136,13 @@ const Header = () => {
                 {!isSearchActive ? (
                     <div>
                         <ul className="flex gap-8">
-                        {loading
+                            {loading
                                 ? [...Array(1)].map((_, index) => (
                                     <div key={index} className="w-[100px] h-[25px] rounded-lg bg-gray-300 animate-pulse"></div>
-                                )): (
+                                )) : (
                                     <li className="group group-hover:visible">
-                                    <Link href={`/`} className="hover:text-blue-500">Trang chủ</Link>
-                                </li> 
+                                        <Link href={`/`} className="hover:text-blue-500">Trang chủ</Link>
+                                    </li>
                                 )}
                             {loading
                                 ? [...Array(6)].map((_, index) => (
