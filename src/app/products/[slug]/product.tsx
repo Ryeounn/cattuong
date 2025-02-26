@@ -173,7 +173,7 @@ const Product = () => {
                     ) : (
                         <div>
                             <div className="flex items-center justify-between mb-5">
-                                <div className="sm:hidden md:block lg:block flex items-center gap-4">
+                                <div className="sm:hidden md:flex lg:flex flex items-center gap-4">
                                     {selectedPrice && (
                                         <div className="relative py-1 px-3 border-[1px] rounded-md border-gray-500 hover:bg-gray-300 transition-all duration-300">
                                             <div>
